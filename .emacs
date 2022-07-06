@@ -64,6 +64,7 @@
 (global-centered-cursor-mode +1)
 (global-auto-revert-mode)
 (scroll-bar-mode -1)
+(wrap-region-mode t)
 
 ;; -- hooks for programming
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
@@ -76,8 +77,21 @@
 (add-hook 'text-mode-hook 'synosaurus-mode)
 (add-hook 'text-mode-hook 'olivetti-mode)
 (add-hook 'text-mode-hook 'palimpsest-mode)
+(add-hook 'text-mode-hook 'wrap-region-mode)
 (add-hook 'text-mode-hook #'flyspell-mode)
 (add-hook 'text-mode-hook #'abbrev-mode)
+
+;; -- xml
+(add-hook 'nxml-mode-hook 'display-line-numbers-mode)
+(add-hook 'nxml-mode-hook 'electric-indent-mode)
+(add-hook 'nxml-mode-hook 'hl-line-mode)
+(add-hook 'nxml-mode-hook (lambda () (olivetti-mode -1)))
+
+;; -- html
+(add-hook 'html-mode-hook 'display-line-numbers-mode)
+(add-hook 'html-mode-hook 'electric-indent-mode)
+(add-hook 'html-mode-hook 'hl-line-mode)
+(add-hook 'html-mode-hook (lambda () (olivetti-mode -1)))
 
 ;; -- dired 
 (put 'dired-find-alternate-file 'disabled nil)
@@ -442,12 +456,15 @@
 (setq TeX-auto-save t
       TeX-parse-self t
       TeX-PDF-mode t
-      reftex-plug-into-AUCTeX t)
+      reftex-plug-into-AUCTeX t
+      TeX-engine 'xetex
+      pdf-latex-command "xelatex") ; needed from latex preview pane
 
 (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
-(add-hook 'LaTeX-mode-hook 'linum-mode)
+(add-hook 'LaTeX-mode-hook 'display-line-numbers-mode)
 (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
 (add-hook 'LaTeX-mode-hook 'hl-line-mode)
+(add-hook 'LaTeX-mode-hook (lambda () (olivetti-mode -1)))
 
 (latex-preview-pane-enable)
 
@@ -467,6 +484,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(TeX-engine 'xetex)
  '(abbrev-file-name "~/org/abbrev_defs/abbrev_defs")
  '(custom-enabled-themes '(modus-vivendi))
  '(custom-safe-themes
@@ -478,7 +496,8 @@
    '("/home/ilmari/org/org-roam/lecture-notes/2022-06-06-lecture-nccu_mandarin_notes.org" "/home/ilmari/org/org-todo/todo.org" "/home/ilmari/org/org-roam/org-journal/2022-07-journal.org"))
  '(org-ellipsis " ⤾")
  '(package-selected-packages
-   '(org-make-toc expand-region multiple-cursors latex-preview-pane auctex gnu-elpa-keyring-update magit bongo org-roam-bibtex aggressive-indent modus-themes elfeed-org srefactor org-static-blog org-bullets lua-mode adaptive-wrap deft org-msg flyspell-popup helm-bibtex wc-mode mu4e-alert helm-descbinds palimpsest xclip olivetti org-roam-ui org-roam engine-mode synosaurus centered-cursor-mode org-wc writegood-mode org-contrib org-journal org-pomodoro notmuch))
+   '(wrap-region org-make-toc expand-region multiple-cursors latex-preview-pane auctex gnu-elpa-keyring-update magit bongo org-roam-bibtex aggressive-indent modus-themes elfeed-org srefactor org-static-blog org-bullets lua-mode adaptive-wrap deft org-msg flyspell-popup helm-bibtex wc-mode mu4e-alert helm-descbinds palimpsest xclip olivetti org-roam-ui org-roam engine-mode synosaurus centered-cursor-mode org-wc writegood-mode org-contrib org-journal org-pomodoro notmuch))
+ '(pdf-latex-command "xelatex")
  '(synosaurus-backend 'synosaurus-backend-wordnet)
  '(tool-bar-mode nil))
 
@@ -494,3 +513,4 @@
  '(writegood-duplicates-face ((t (:underline (:color "deep sky blue" :style wave)))))
  '(writegood-passive-voice-face ((t (:underline (:color "magenta" :style wave)))))
  '(writegood-weasels-face ((t (:underline (:color "green yellow" :style wave))))))
+
