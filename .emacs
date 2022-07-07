@@ -12,14 +12,13 @@
 ;; -- emacs misc settings
 (setq initial-buffer-choice "~/org/org-todo/todo.org"
       inhibit-startup-screen t
-      next-line-add-newlines t
       system-time-locale "C"
       tramp-verbose 1
       auth-sources '("~/.authinfo.gpg" "~/.authinfo" "~/.netrc")
       ring-bell-function 'ignore
       server-client-instructions nil
-      native-comp-async-report-warnings-errors nil
-      electric-pair-preserve-balance nil)
+      native-comp-async-report-warnings-errors nil)
+
 
 ;; -- deleting stuff
 (setq undo-limit 800000
@@ -33,10 +32,14 @@
       wc-modeline-format "WC[%W%w/%tw%gw]"
       ispell-dictionary "en_US"
       abbrev-file-name "~/org/abbrev_defs/abbrev_defs"
+      next-line-add-newlines t
       save-abbrevs 'silently
-      word-wrap-by-category t)
+      word-wrap-by-category t
+      electric-pair-preserve-balance nil
+      global-hl-line-mode t
+      synosaurus-backend 'synosaurus-backend-wordnet)
 
-;; -- writegood
+;; -- writegood-mode
 (setq writegood-weasel-words
       '("many" "various" "very" "fairly"
 	"several" "extremely" "exceedingly" "quite"
@@ -117,6 +120,7 @@
 (global-set-key (kbd "C-c 1") 'elfeed)
 (global-set-key (kbd "C-c l") #'flyspell-popup-correct)
 (global-set-key (kbd "C-c z") 'olivetti-mode)
+(global-set-key (kbd "C-c i") 'hl-line-mode)
 
 ;; -- multiple cursors (based on "https://www.youtube.com/watch?v=mDDeSKRc3Zo")
 ;; -- if issue with org-mode delete "~/.emacs.d/.mc-lists.el" and follow prompt
@@ -209,7 +213,11 @@
       org-log-into-drawer t
       org-hide-emphasis-markers nil
       org-startup-truncated t
-      org-tags-column 0)
+      org-tags-column 0
+      org-ellipsis " ⤾")
+
+;; -- org wc
+(setq org-wc-ignored-tags '("nowc" "ARCHIVE"))
 
 ;; -- org-ref
 (require 'org-ref)
@@ -477,29 +485,18 @@
 ;----------------------------------------------------------------------;
 ; ADDED BY EMACS                                                       ; 
 ;----------------------------------------------------------------------;
-;; -- TODO move some of these above
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(TeX-engine 'xetex t)
- '(abbrev-file-name "~/org/abbrev_defs/abbrev_defs")
  '(custom-enabled-themes '(modus-vivendi))
  '(custom-safe-themes
    '("4a288765be220b99defaaeb4c915ed783a9916e3e08f33278bf5ff56e49cbc73" "5a611788d47c1deec31494eb2bb864fde402b32b139fe461312589a9f28835db" "a0415d8fc6aeec455376f0cbcc1bee5f8c408295d1c2b9a1336db6947b89dd98" "dad40020beea412623b04507a4c185079bff4dcea20a93d8f8451acb6afc8358" "c414f69a02b719fb9867b41915cb49c853489930be280ce81385ff7b327b4bf6" "02fff7eedb18d38b8fd09a419c579570673840672da45b77fde401d8708dc6b5" default))
- '(flycheck-checker-error-threshold 9999)
- '(helm-completion-style 'helm)
- '(menu-bar-mode nil)
  '(org-agenda-files
    '("/home/ilmari/org/org-roam/lecture-notes/2022-06-06-lecture-nccu_mandarin_notes.org" "/home/ilmari/org/org-todo/todo.org" "/home/ilmari/org/org-roam/org-journal/2022-07-journal.org"))
- '(org-ellipsis " ⤾")
  '(package-selected-packages
-   '(wrap-region org-make-toc expand-region multiple-cursors latex-preview-pane auctex gnu-elpa-keyring-update magit bongo org-roam-bibtex aggressive-indent modus-themes elfeed-org srefactor org-static-blog org-bullets lua-mode adaptive-wrap deft org-msg flyspell-popup helm-bibtex wc-mode mu4e-alert helm-descbinds palimpsest xclip olivetti org-roam-ui org-roam engine-mode synosaurus centered-cursor-mode org-wc writegood-mode org-contrib org-journal org-pomodoro notmuch))
- '(pdf-latex-command "xelatex")
- '(synosaurus-backend 'synosaurus-backend-wordnet)
- '(tool-bar-mode nil))
+   '(wrap-region org-make-toc expand-region multiple-cursors latex-preview-pane auctex gnu-elpa-keyring-update magit bongo org-roam-bibtex aggressive-indent modus-themes elfeed-org srefactor org-static-blog org-bullets lua-mode adaptive-wrap deft org-msg flyspell-popup helm-bibtex wc-mode mu4e-alert helm-descbinds palimpsest xclip olivetti org-roam-ui org-roam engine-mode synosaurus centered-cursor-mode org-wc writegood-mode org-contrib org-journal org-pomodoro notmuch)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
