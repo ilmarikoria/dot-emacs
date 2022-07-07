@@ -150,8 +150,8 @@
 (global-set-key (kbd "C-c n g") 'org-roam-graph)
 (global-set-key (kbd "C-c n i") 'org-roam-node-insert)
 (global-set-key (kbd "C-c n c") 'org-roam-capture)
-(global-set-key (kbd "C-c n j") 'org-roam-dailies-capture-today)
-(global-set-key (kbd "C-c n d") 'org-journal-new-entry)
+(global-set-key (kbd "C-c n d") 'org-roam-dailies-capture-today)
+(global-set-key (kbd "C-c n j") 'org-journal-new-entry)
 (global-set-key (kbd "C-c n r") 'org-journal-search-forever)
 (global-set-key (kbd "C-c n p") 'completion-at-point)
 (global-set-key (kbd "C-c n s") 'deft)
@@ -386,11 +386,11 @@
         ("m" "misc-note" plain "%?" :target (file+head "misc-notes/%<%Y-%m-%d>-misc-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t)
 	("o" "project-note" plain "%?" :target (file+head "project-notes/%<%Y-%m-%d>-project-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t)
 	("l" "lecture-note" plain "%?" :target (file+head "lecture-notes/%<%Y-%m-%d>-lecture-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t)
-        ("t" "tech-note" plain "%?" :target (file+head "tech-notes/%<%Y-%m-%d>-tech-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t)
+        ("t" "software-note" plain "%?" :target (file+head "software-notes/%<%Y-%m-%d>-sfotware-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t)
         ("a" "application-note" plain "%?" :target (file+head "application-notes/%<%Y-%m-%d>-application-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t)
-        ("w" "paper-note" plain "%?" :target (file+head "paper-note/%<%Y-%m-%d>-paper-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t)
-        ("x" "metadata-note" plain "%?" :target (file+head "metadata-note/%<%Y-%m-%d>-metadata-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t)
-        ("j" "work-note" plain "%?" :target (file+head "work-notes/%<%Y-%m-%d>-work-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t)))
+        ("w" "essay-note" plain "%?" :target (file+head "essay-note/%<%Y-%m-%d>-essay-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t)
+        ("x" "markup-note" plain "%?" :target (file+head "markup-notes/%<%Y-%m-%d>-markup-note-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t)
+        ("j" "technical-writing-note" plain "%?" :target (file+head "technical-writing/%<%Y-%m-%d>-technical-writing-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t)))
 
 ;; -- dailies
 (setq org-roam-dailies-directory "~/org/org-roam/fleeting-notes"
@@ -484,7 +484,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(TeX-engine 'xetex)
+ '(TeX-engine 'xetex t)
  '(abbrev-file-name "~/org/abbrev_defs/abbrev_defs")
  '(custom-enabled-themes '(modus-vivendi))
  '(custom-safe-themes
