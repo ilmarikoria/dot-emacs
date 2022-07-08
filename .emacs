@@ -54,6 +54,11 @@
       olivetti-minimum-body-width 72
       olivetti-recall-visual-line-mode-entry-state t)
 
+;; -- auto capitalization
+(add-to-list 'load-path "~/.emacs.d/my-packages/auto-capitalize-el/")
+(require 'auto-capitalize)
+(setq auto-capitalize-words `("I" "English" "Chinese" "China"))
+
 ;; -- misc modes
 (electric-pair-mode 1)
 (menu-bar-mode -1)
@@ -79,6 +84,7 @@
 (add-hook 'text-mode-hook 'synosaurus-mode)
 (add-hook 'text-mode-hook 'olivetti-mode)
 (add-hook 'text-mode-hook 'palimpsest-mode)
+(add-hook 'text-mode-hook 'auto-capitalize-mode)
 (add-hook 'text-mode-hook 'wrap-region-mode)
 (add-hook 'text-mode-hook #'flyspell-mode)
 (add-hook 'text-mode-hook #'abbrev-mode)
@@ -88,12 +94,14 @@
 (add-hook 'nxml-mode-hook 'electric-indent-mode)
 (add-hook 'nxml-mode-hook 'hl-line-mode)
 (add-hook 'nxml-mode-hook (lambda () (olivetti-mode -1)))
+(add-hook 'nxml-mode-hook (lambda () (auto-capitalize-mode -1)))
 
 ;; -- html
 (add-hook 'html-mode-hook 'display-line-numbers-mode)
 (add-hook 'html-mode-hook 'electric-indent-mode)
 (add-hook 'html-mode-hook 'hl-line-mode)
 (add-hook 'html-mode-hook (lambda () (olivetti-mode -1)))
+(add-hook 'html-mode-hook (lambda () (auto-capitalize-mode -1)))
 
 ;; -- dired 
 (put 'dired-find-alternate-file 'disabled nil)
@@ -443,7 +451,7 @@
 ;; -- org roam buffer settings
 (setq org-roam-mode-sections
       (list #'org-roam-backlinks-section
-            #'org-roam-reflinks-section
+            ;; #'org-roam-reflinks-section
             ;; #'org-roam-unlinked-references-section
             ))
 
