@@ -35,7 +35,9 @@
       save-abbrevs 'silently
       word-wrap-by-category t
       electric-pair-preserve-balance nil
-      synosaurus-backend 'synosaurus-backend-wordnet)
+      synosaurus-backend 'synosaurus-backend-wordnet
+      ispell-personal-dictionary "~/emacs/ispell-personal-dictionary"
+      ispell-silently-savep t)
 
 ;; -- writegood-mode
 (setq writegood-weasel-words
@@ -128,7 +130,7 @@
 (global-set-key (kbd "C-c z") 'olivetti-mode)
 (global-set-key (kbd "C-c i") 'hl-line-mode)
 (global-set-key (kbd "C-c t") 'dired-toggle-read-only)
-(global-set-key (kbd "C-c r") 'org-static-blog-publish)
+(global-set-key (kbd "C-c r") 'ispell-word)
 
 ;; -- multiple cursors (based on "https://www.youtube.com/watch?v=mDDeSKRc3Zo")
 ;; -- if issue with org-mode delete "~/.emacs.d/.mc-lists.el" and follow prompt
@@ -464,9 +466,9 @@
                                      (no-delete-other-windows . t)))))
 
 ;; -- TODO fix this hack
-;; (add-hook 'org-roam-buffer-postrender-functions 'visual-line-mode)
-;; (add-hook 'org-roam-buffer-postrender-functions 'org-indent-mode)
-;; (add-hook 'org-roam-buffer-postrender-functions 'wrap-region-mode)
+(add-hook 'org-roam-buffer-postrender-functions 'visual-line-mode)
+(add-hook 'org-roam-buffer-postrender-functions 'org-indent-mode)
+(add-hook 'org-roam-buffer-postrender-functions 'wrap-region-mode)
 
 ;-----------------------------------------------------------------------;
 ; ELFEED RSS                                                            ; 
