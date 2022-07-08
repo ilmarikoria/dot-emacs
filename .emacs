@@ -19,7 +19,6 @@
       server-client-instructions nil
       native-comp-async-report-warnings-errors nil)
 
-
 ;; -- deleting stuff
 (setq undo-limit 800000
       undo-strong-limit 12000000
@@ -36,7 +35,6 @@
       save-abbrevs 'silently
       word-wrap-by-category t
       electric-pair-preserve-balance nil
-      global-hl-line-mode t
       synosaurus-backend 'synosaurus-backend-wordnet)
 
 ;; -- writegood-mode
@@ -68,6 +66,7 @@
 (global-auto-revert-mode)
 (scroll-bar-mode -1)
 (wrap-region-mode t)
+(global-hl-line-mode 1)
 
 ;; -- hooks for programming
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
