@@ -55,6 +55,7 @@
       olivetti-recall-visual-line-mode-entry-state t)
 
 ;; -- auto capitalization
+;; -- fix for org mode "https://emacs.stackexchange.com/questions/3949/fixing-auto-capitalize-to-work-with-org-mode-headings-and-lists"
 (add-to-list 'load-path "~/.emacs.d/my-packages/auto-capitalize-el/")
 (require 'auto-capitalize)
 (setq auto-capitalize-words `("I" "English" "Chinese" "China"))
@@ -94,14 +95,12 @@
 (add-hook 'nxml-mode-hook 'electric-indent-mode)
 (add-hook 'nxml-mode-hook 'hl-line-mode)
 (add-hook 'nxml-mode-hook (lambda () (olivetti-mode -1)))
-(add-hook 'nxml-mode-hook (lambda () (auto-capitalize-mode -1)))
 
 ;; -- html
 (add-hook 'html-mode-hook 'display-line-numbers-mode)
 (add-hook 'html-mode-hook 'electric-indent-mode)
 (add-hook 'html-mode-hook 'hl-line-mode)
 (add-hook 'html-mode-hook (lambda () (olivetti-mode -1)))
-(add-hook 'html-mode-hook (lambda () (auto-capitalize-mode -1)))
 
 ;; -- dired 
 (put 'dired-find-alternate-file 'disabled nil)
@@ -320,7 +319,7 @@
 
 (my-org-agenda-to-appt)
 
-(add-hook 'after-save-hook '(lambda ()
+(add-hook 'after-save-hook #'(lambda ()
 			      (if (string= (buffer-file-name)
 					   (concat (getenv "HOME") "/org/org-todo/todo.org"))
 				  (my-org-agenda-to-appt))))
@@ -465,9 +464,9 @@
                                      (no-delete-other-windows . t)))))
 
 ;; -- TODO fix this hack
-(add-hook 'org-roam-buffer-postrender-functions 'visual-line-mode)
-(add-hook 'org-roam-buffer-postrender-functions 'org-indent-mode)
-(add-hook 'org-roam-buffer-postrender-functions 'wrap-region-mode)
+;; (add-hook 'org-roam-buffer-postrender-functions 'visual-line-mode)
+;; (add-hook 'org-roam-buffer-postrender-functions 'org-indent-mode)
+;; (add-hook 'org-roam-buffer-postrender-functions 'wrap-region-mode)
 
 ;-----------------------------------------------------------------------;
 ; ELFEED RSS                                                            ; 
