@@ -120,6 +120,8 @@
 (global-set-key (kbd "C-c l") #'flyspell-popup-correct)
 (global-set-key (kbd "C-c z") 'olivetti-mode)
 (global-set-key (kbd "C-c i") 'hl-line-mode)
+(global-set-key (kbd "C-c t") 'dired-toggle-read-only)
+(global-set-key (kbd "C-c r") 'org-static-blog-publish)
 
 ;; -- multiple cursors (based on "https://www.youtube.com/watch?v=mDDeSKRc3Zo")
 ;; -- if issue with org-mode delete "~/.emacs.d/.mc-lists.el" and follow prompt
@@ -391,12 +393,12 @@
         ("b" "blog" plain "%?" :target (file+head "blog-drafts/%<%Y-%m-%d>-blog-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}\n#+DESCRIPTION: %^{short description}\n#+date: <%<%Y-%m-%d %H:%M>>\n# ~ REMEMBER: max 5-6 citations\n* Introduction\n* par2\n* par3\n* par4\n* par5\n* par6\n* par7\n* Conclusion\n* References :ignore:\n#+BIBLIOGRAPHY: bibliography.bib plain option:-a option:-noabstract option:-heveaurl limit:t\n* Footnotes :ignore:\n* Text-dump :noexport:") :unnarrowed t)
         ("r" "reference-note" plain "%?" :target (file+head "reference-notes/%<%Y-%m-%d>-reference-${citekey}.org" "#+title: ${citekey} - ${title}\n#+filetags: %^{TAGS}\n\n--\n *") :unnarrowed t)
         ("m" "misc-note" plain "%?" :target (file+head "misc-notes/%<%Y-%m-%d>-misc-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t)
-	("o" "project-note" plain "%?" :target (file+head "project-notes/%<%Y-%m-%d>-project-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t)
+	("e" "presentation" plain "%?" :target (file+head "presentation/%<%Y-%m-%d>-presentation-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t)
 	("l" "lecture-note" plain "%?" :target (file+head "lecture-notes/%<%Y-%m-%d>-lecture-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t)
         ("t" "software-note" plain "%?" :target (file+head "software-notes/%<%Y-%m-%d>-sfotware-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t)
-        ("a" "application-note" plain "%?" :target (file+head "application-notes/%<%Y-%m-%d>-application-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t)
+        ("o" "project-note" plain "%?" :target (file+head "project-notes/%<%Y-%m-%d>-project-note-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t)
         ("w" "essay-note" plain "%?" :target (file+head "essay-note/%<%Y-%m-%d>-essay-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t)
-        ("x" "markup-note" plain "%?" :target (file+head "markup-notes/%<%Y-%m-%d>-markup-note-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t)
+        ("s" "sound-note" plain "%?" :target (file+head "sound-notes/%<%Y-%m-%d>-sound-note-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t)
         ("j" "technical-writing-note" plain "%?" :target (file+head "technical-writing/%<%Y-%m-%d>-technical-writing-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t)))
 
 ;; -- dailies
@@ -437,6 +439,27 @@
 (setq org-roam-db-node-include-function
       (lambda ()
         (not (member "ATTACH" (org-get-tags)))))
+
+;; -- org roam buffer settings
+(setq org-roam-mode-sections
+      (list #'org-roam-backlinks-section
+            #'org-roam-reflinks-section
+            ;; #'org-roam-unlinked-references-section
+            ))
+
+(add-to-list 'display-buffer-alist
+             '("\\*org-roam\\*"
+               (display-buffer-in-side-window)
+               (side . right)
+               (slot . 0)
+               (window-width . 0.33)
+               (window-parameters . ((no-other-window . t)
+                                     (no-delete-other-windows . t)))))
+
+;; -- TODO fix this hack
+(add-hook 'org-roam-buffer-postrender-functions 'visual-line-mode)
+(add-hook 'org-roam-buffer-postrender-functions 'org-indent-mode)
+(add-hook 'org-roam-buffer-postrender-functions 'wrap-region-mode)
 
 ;-----------------------------------------------------------------------;
 ; ELFEED RSS                                                            ; 
