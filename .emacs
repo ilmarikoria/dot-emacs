@@ -305,6 +305,10 @@
 	  (lambda ()
 	    (add-hook 'after-save-hook 'my-org-align-tags nil 'make-it-local)))
 
+;; -- org to xml export
+(add-to-list 'load-path "~/.emacs.d/my-packages/org-to-xml")
+(require 'om-to-xml) ;; requires "org-ml" (from melpa)
+
 ;-----------------------------------------------------------------------;
 ; NOTIFICATION THINGY                                                   ;
 ;-----------------------------------------------------------------------;
@@ -458,12 +462,10 @@
 
 (add-to-list 'display-buffer-alist
              '("\\*org-roam\\*"
-               (display-buffer-in-side-window)
-               (side . right)
-               (slot . 0)
+               (display-buffer-in-direction)
+               (direction . right)
                (window-width . 0.33)
-               (window-parameters . ((no-other-window . t)
-                                     (no-delete-other-windows . t)))))
+               (window-height . fit-window-to-buffer)))
 
 ;; -- TODO fix this hack
 (add-hook 'org-roam-buffer-postrender-functions 'visual-line-mode)
@@ -527,7 +529,7 @@
  '(org-agenda-files
    '("/home/ilmari/org/org-roam/lecture-notes/2022-06-06-lecture-nccu_mandarin_notes.org" "/home/ilmari/org/org-todo/todo.org" "/home/ilmari/org/org-roam/org-journal/2022-07-journal.org"))
  '(package-selected-packages
-   '(wrap-region org-make-toc expand-region multiple-cursors latex-preview-pane auctex gnu-elpa-keyring-update magit bongo org-roam-bibtex aggressive-indent modus-themes elfeed-org srefactor org-static-blog org-bullets lua-mode adaptive-wrap deft org-msg flyspell-popup helm-bibtex wc-mode mu4e-alert helm-descbinds palimpsest xclip olivetti org-roam-ui org-roam engine-mode synosaurus centered-cursor-mode org-wc writegood-mode org-contrib org-journal org-pomodoro notmuch)))
+   '(org-ml wrap-region org-make-toc expand-region multiple-cursors latex-preview-pane auctex gnu-elpa-keyring-update magit bongo org-roam-bibtex aggressive-indent modus-themes elfeed-org srefactor org-static-blog org-bullets lua-mode adaptive-wrap deft org-msg flyspell-popup helm-bibtex wc-mode mu4e-alert helm-descbinds palimpsest xclip olivetti org-roam-ui org-roam engine-mode synosaurus centered-cursor-mode org-wc writegood-mode org-contrib org-journal org-pomodoro notmuch)))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
