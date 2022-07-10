@@ -156,6 +156,7 @@
 (global-set-key (kbd "C-c 0") 'org-insert-structure-template)
 (global-set-key (kbd "C-c g") 'org-schedule)
 (global-set-key (kbd "C-c d") 'org-deadline)
+(global-set-key (kbd "C-c m") 'org-id-get-create)
 (global-set-key (kbd "C-c q") 'org-insert-heading-after-current)
 
 ;; -- org-roam
@@ -409,9 +410,8 @@
 	("e" "presentation" plain "%?" :target (file+head "presentation/%<%Y-%m-%d>-presentation-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t)
 	("l" "lecture-note" plain "%?" :target (file+head "lecture-notes/%<%Y-%m-%d>-lecture-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t)
         ("t" "software-note" plain "%?" :target (file+head "software-notes/%<%Y-%m-%d>-sfotware-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t)
-        ("o" "project-note" plain "%?" :target (file+head "project-notes/%<%Y-%m-%d>-project-note-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t)
+        ("o" "academic-note" plain "%?" :target (file+head "academic-notes/%<%Y-%m-%d>-academic-note-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t)
         ("w" "essay-note" plain "%?" :target (file+head "essay-note/%<%Y-%m-%d>-essay-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t)
-        ("s" "sound-note" plain "%?" :target (file+head "sound-notes/%<%Y-%m-%d>-sound-note-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t)
         ("j" "technical-writing-note" plain "%?" :target (file+head "technical-writing/%<%Y-%m-%d>-technical-writing-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t)))
 
 ;; -- dailies
@@ -456,7 +456,7 @@
 ;; -- org roam buffer settings
 (setq org-roam-mode-sections
       (list #'org-roam-backlinks-section
-            ;; #'org-roam-reflinks-section
+            #'org-roam-reflinks-section
             ;; #'org-roam-unlinked-references-section
             ))
 
@@ -490,6 +490,14 @@
 (require 'elfeed-org)
 (elfeed-org)
 (setq rmh-elfeed-org-files (list "~/org/org-todo/rss.org"))
+
+;; -- fix for use with olivetti
+(defun elfeed-olivetti (buff)
+  (switch-to-buffer buff)
+  (olivetti-mode)
+  (elfeed-show-refresh))
+
+(setq elfeed-show-entry-switch 'elfeed-olivetti)
 
 ;-----------------------------------------------------------------------;
 ; LATEX                                                                 ;
