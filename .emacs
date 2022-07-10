@@ -406,13 +406,8 @@
       '(("p" "permanent-note" plain "%?" :target (file+head "permanent-notes/%<%Y-%m-%d>-permanent-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}\n # ~ REMEMBER: max 200 words") :unnarrowed t)
         ("b" "blog" plain "%?" :target (file+head "blog-drafts/%<%Y-%m-%d>-blog-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}\n#+DESCRIPTION: %^{short description}\n#+date: <%<%Y-%m-%d %H:%M>>\n# ~ REMEMBER: max 5-6 citations\n* Introduction\n* par2\n* par3\n* par4\n* par5\n* par6\n* par7\n* Conclusion\n* References :ignore:\n#+BIBLIOGRAPHY: bibliography.bib plain option:-a option:-noabstract option:-heveaurl limit:t\n* Footnotes :ignore:\n* Text-dump :noexport:") :unnarrowed t)
         ("r" "reference-note" plain "%?" :target (file+head "reference-notes/%<%Y-%m-%d>-reference-${citekey}.org" "#+title: ${citekey} - ${title}\n#+filetags: %^{TAGS}\n\n--\n *") :unnarrowed t)
-        ("m" "misc-note" plain "%?" :target (file+head "misc-notes/%<%Y-%m-%d>-misc-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t)
-	("e" "presentation" plain "%?" :target (file+head "presentation/%<%Y-%m-%d>-presentation-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t)
-	("l" "lecture-note" plain "%?" :target (file+head "lecture-notes/%<%Y-%m-%d>-lecture-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t)
-        ("t" "software-note" plain "%?" :target (file+head "software-notes/%<%Y-%m-%d>-sfotware-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t)
-        ("o" "academic-note" plain "%?" :target (file+head "academic-notes/%<%Y-%m-%d>-academic-note-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t)
-        ("w" "essay-note" plain "%?" :target (file+head "essay-note/%<%Y-%m-%d>-essay-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t)
-        ("j" "technical-writing-note" plain "%?" :target (file+head "technical-writing/%<%Y-%m-%d>-technical-writing-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t)))
+        ("m" "misc" plain "%?" :target (file+head "misc/%<%Y-%m-%d>-misc-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t) ;; everything else
+        ("a" "academic-note" plain "%?" :target (file+head "academic-notes/%<%Y-%m-%d>-academic-note-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t))) ;; my general note category for academic studies and professional stuff, use tags to specifiy
 
 ;; -- dailies
 (setq org-roam-dailies-directory "~/org/org-roam/fleeting-notes"
@@ -489,7 +484,7 @@
 ;; -- elfeed-org
 (require 'elfeed-org)
 (elfeed-org)
-(setq rmh-elfeed-org-files (list "~/org/org-todo/rss.org"))
+(setq rmh-elfeed-org-files (list "~/org/org-roam/misc/2022-07-10-misc-rss-feed.org"))
 
 ;; -- fix for use with olivetti
 (defun elfeed-olivetti (buff)
@@ -535,7 +530,7 @@
  '(custom-safe-themes
    '("4a288765be220b99defaaeb4c915ed783a9916e3e08f33278bf5ff56e49cbc73" "5a611788d47c1deec31494eb2bb864fde402b32b139fe461312589a9f28835db" "a0415d8fc6aeec455376f0cbcc1bee5f8c408295d1c2b9a1336db6947b89dd98" "dad40020beea412623b04507a4c185079bff4dcea20a93d8f8451acb6afc8358" "c414f69a02b719fb9867b41915cb49c853489930be280ce81385ff7b327b4bf6" "02fff7eedb18d38b8fd09a419c579570673840672da45b77fde401d8708dc6b5" default))
  '(org-agenda-files
-   '("/home/ilmari/org/org-roam/lecture-notes/2022-06-06-lecture-nccu_mandarin_notes.org" "/home/ilmari/org/org-todo/todo.org" "/home/ilmari/org/org-roam/org-journal/2022-07-journal.org"))
+   '("~/org/org-roam/academic-notes/2022-07-10-academic-note-underwater_river_soundscapes.org" "/home/ilmari/org/org-roam/academic-notes/2022-06-06-academic-note-nccu_mandarin_notes.org" "/home/ilmari/org/org-todo/todo.org" "/home/ilmari/org/org-roam/org-journal/2022-07-journal.org"))
  '(package-selected-packages
    '(org-ml wrap-region org-make-toc expand-region multiple-cursors latex-preview-pane auctex gnu-elpa-keyring-update magit bongo org-roam-bibtex aggressive-indent modus-themes elfeed-org srefactor org-static-blog org-bullets lua-mode adaptive-wrap deft org-msg flyspell-popup helm-bibtex wc-mode mu4e-alert helm-descbinds palimpsest xclip olivetti org-roam-ui org-roam engine-mode synosaurus centered-cursor-mode org-wc writegood-mode org-contrib org-journal org-pomodoro notmuch)))
 
