@@ -60,7 +60,7 @@
 ;; -- fix for org mode "https://emacs.stackexchange.com/questions/3949/fixing-auto-capitalize-to-work-with-org-mode-headings-and-lists"
 (add-to-list 'load-path "~/.emacs.d/my-packages/auto-capitalize-el/")
 (require 'auto-capitalize)
-(setq auto-capitalize-words `("I" "English" "Chinese" "China"))
+(setq auto-capitalize-words `("I" "English" "Chinese" "China" "Taiwan"))
 
 ;; -- misc modes
 (electric-pair-mode 1)
@@ -178,7 +178,9 @@
 (defengine google "http://www.google.com/search?ie=utf-8&oe=utf-8&q=%s"
   :keybinding "g")
 (defengine wikipedia "http://www.wikipedia.org/search-redirect.php?language=en&go=Go&search=%s"
-	   :keybinding "w" :docstring "Searchin' the wikis.")
+  :keybinding "w")
+(defengine thesaurus "https://www.thesaurus.com/browse/%s"
+  :keybinding "t")
 
 ;; -- zoom
 (add-to-list 'load-path "~/.emacs.d/my-packages/zoom-frm/")
@@ -240,7 +242,7 @@
       org-pomodoro-play-sounds t)
 
 ;; -- org latex export
-(setq org-latex-toc-command "\\tableofcontents \\clearpage"
+(setq org-latex-toc-command "\\tableofcontents \\addtocontents{toc}{\\protect\\thispagestyle{empty}} \\newpage" ;; -- TODO fix this 
       org-latex-compiler "xelatex"
       org-latex-pdf-process '("xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"
 			      "bibtex %b" "xelatex -shell-escape -interaction nonstopmode -output-directory %o %f"
