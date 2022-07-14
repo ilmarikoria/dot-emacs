@@ -92,11 +92,13 @@
 (add-hook 'text-mode-hook #'flyspell-mode)
 (add-hook 'text-mode-hook #'abbrev-mode)
 
-;; -- xml
+;; -- xml hooks
 (add-hook 'nxml-mode-hook 'display-line-numbers-mode)
 (add-hook 'nxml-mode-hook 'electric-indent-mode)
 (add-hook 'nxml-mode-hook 'hl-line-mode)
 (add-hook 'nxml-mode-hook (lambda () (olivetti-mode -1)))
+(add-to-list 'auto-mode-alist '("\\.dita\\'" . nxml-mode))
+(add-to-list 'auto-mode-alist '("\\.ditamap\\'" . nxml-mode))
 
 ;; -- html
 (add-hook 'html-mode-hook 'display-line-numbers-mode)
@@ -119,6 +121,11 @@
 (modify-category-entry ?\) ?|)
 (modify-category-entry ?_ ?|)
 (modify-category-entry ?/ ?|)
+
+;; -- mediawiki
+(setq mediawiki-site-alist '(("Debian" "https://wiki.debian.org/WikiHomePage/" "" "" "Main Page")))
+(setq mediawiki-mode-hook (lambda ()
+                            (visual-line-mode 1)))
 
 ;-----------------------------------------------------------------------;
 ; GLOBAL KEYBINDINGS                                                    ;
@@ -275,8 +282,8 @@
       org-export-with-toc nil
       org-export-with-section-numbers nil
       org-html-footnotes-section "<div id=\"footnotes\">
-                                  	<h2 class=\"footnotes\">%s </h2>
-                                        	<div id=\"text-footnotes\">%s</div>
+                                  <h2 class=\"footnotes\">%s </h2>
+                                  <div id=\"text-footnotes\">%s</div>
                                   </div>")
 
 ;; -- org agenda
@@ -368,7 +375,7 @@
       org-static-blog-preview-end "")
 
 (setq org-static-blog-index-front-matter "<div id=\"recent-posts\">
-                                          	<h2>recent posts</h2>
+                                          <h2>recent posts</h2>
                                           </div>")      
 
 (setq org-static-blog-page-header "<meta name=\"author\" content=\"Ilmari Koria\">
@@ -378,18 +385,18 @@
                                    <link rel=\"icon\" href=\"data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏞</text></svg>\">")
  
 (setq org-static-blog-page-preamble "<div id=\"banner\">
-                                     	<div id=\"top-nav\">
-                                        	<p style=\"text-align:left;\">ilmari koria blog 
-                                                	<span style=\"float:right;\">
-                                                		<a href=\"https://ilmarikoria.com\">home</a> | <a href=\"https://ilmarikoria.com/archive.html\">posts</a> | <a href=\"https://ilmarikoria.com/contact.html\">contact</a>
-                                                        </span>
-                                                </p>
-                                        </div>
+                                     <div id=\"top-nav\">
+                                     <p style=\"text-align:left;\">ilmari koria blog
+                                     <span style=\"float:right;\">
+                                     <a href=\"https://ilmarikoria.com\">home</a> | <a href=\"https://ilmarikoria.com/archive.html\">posts</a> | <a href=\"https://ilmarikoria.com/contact.html\">contact</a>
+                                     </span>
+                                     </p>
+                                     </div>
                                      </div>")      
 
 (setq org-static-blog-page-postamble "<hr>
                                       <div id=\"bottom-nav\">
-                                      	<a href=\"https://ilmarikoria.com/rss.xml\">rss</a> | <a href=\"https://creativecommons.org/licenses/by-nc/4.0/\">license</a>
+                                      <a href=\"https://ilmarikoria.com/rss.xml\">rss</a> | <a href=\"https://creativecommons.org/licenses/by-nc/4.0/\">license</a>
                                       </div>")
 
 ;-----------------------------------------------------------------------;
@@ -415,10 +422,12 @@
 
 ;; -- roam templates
 (setq org-roam-capture-templates
-      '(("p" "permanent-note" plain "%?" :target (file+head "permanent-notes/%<%Y-%m-%d>-permanent-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}\n # ~ REMEMBER: max 200 words") :unnarrowed t)
+      '(("p" "permanent" plain "%?" :target (file+head "permanent-notes/%<%Y-%m-%d>-permanent-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}\n # ~ REMEMBER: max 200 words") :unnarrowed t)
         ("b" "blog" plain "%?" :target (file+head "blog-drafts/%<%Y-%m-%d>-blog-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}\n#+DESCRIPTION: %^{short description}\n#+date: <%<%Y-%m-%d %H:%M>>\n# ~ REMEMBER: max 5-6 citations\n* Introduction\n* par2\n* par3\n* par4\n* par5\n* par6\n* par7\n* Conclusion\n* References :ignore:\n#+BIBLIOGRAPHY: bibliography.bib plain option:-a option:-noabstract option:-heveaurl limit:t\n* Footnotes :ignore:\n* Text-dump :noexport:") :unnarrowed t)
-        ("r" "reference-note" plain "%?" :target (file+head "reference-notes/%<%Y-%m-%d>-reference-${citekey}.org" "#+title: ${citekey} - ${title}\n#+filetags: %^{TAGS}\n\n--\n *") :unnarrowed t)
+        ("r" "reference" plain "%?" :target (file+head "reference-notes/%<%Y-%m-%d>-reference-${citekey}.org" "#+title: ${citekey} - ${title}\n#+filetags: %^{TAGS}\n\n--\n *") :unnarrowed t)
         ("m" "misc" plain "%?" :target (file+head "misc/%<%Y-%m-%d>-misc-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t) ;; everything else
+        ("w" "wiki" plain "%?" :target (file+head "wiki/%<%Y-%m-%d>-wiki-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t)
+        ("l" "application" plain "%?" :target (file+head "application-notes/%<%Y-%m-%d>-application-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t)
         ("a" "academic-note" plain "%?" :target (file+head "academic-notes/%<%Y-%m-%d>-academic-note-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t))) ;; my general note category for academic studies and professional stuff, use tags to specifiy
 
 ;; -- dailies
@@ -538,9 +547,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes '(modus-operandi))
+ '(custom-enabled-themes '(modus-vivendi))
  '(custom-safe-themes
-   '("4a288765be220b99defaaeb4c915ed783a9916e3e08f33278bf5ff56e49cbc73" default))
+   '("5a611788d47c1deec31494eb2bb864fde402b32b139fe461312589a9f28835db" "4a288765be220b99defaaeb4c915ed783a9916e3e08f33278bf5ff56e49cbc73" default))
  '(org-agenda-files
    '("/home/ilmari/org/org-roam/todo/todo.org" "/home/ilmari/org/org-roam/academic-notes/2022-07-10-academic-note-underwater_river_soundscapes.org" "/home/ilmari/org/org-roam/academic-notes/2022-06-06-academic-note-nccu_mandarin_notes.org" "/home/ilmari/org/org-roam/org-journal/2022-07-journal.org"))
  '(package-selected-packages
@@ -558,4 +567,3 @@
  '(writegood-duplicates-face ((t (:underline (:color "deep sky blue" :style wave)))))
  '(writegood-passive-voice-face ((t (:underline (:color "magenta" :style wave)))))
  '(writegood-weasels-face ((t (:underline (:color "green yellow" :style wave))))))
-
