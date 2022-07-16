@@ -551,7 +551,7 @@
  '(custom-safe-themes
    '("5a611788d47c1deec31494eb2bb864fde402b32b139fe461312589a9f28835db" "4a288765be220b99defaaeb4c915ed783a9916e3e08f33278bf5ff56e49cbc73" default))
  '(org-agenda-files
-   '("/home/ilmari/org/org-roam/todo/todo.org" "/home/ilmari/org/org-roam/academic-notes/2022-07-10-academic-note-underwater_river_soundscapes.org" "/home/ilmari/org/org-roam/academic-notes/2022-06-06-academic-note-nccu_mandarin_notes.org" "/home/ilmari/org/org-roam/org-journal/2022-07-journal.org"))
+   '("/home/ilmari/org/org-roam/todo/todo.org" "/home/ilmari/org/org-roam/academic-notes/2022-06-06-academic-note-nccu_mandarin_notes.org" "/home/ilmari/org/org-roam/org-journal/2022-07-journal.org"))
  '(package-selected-packages
    '(org-ml wrap-region org-make-toc expand-region multiple-cursors latex-preview-pane auctex gnu-elpa-keyring-update magit bongo org-roam-bibtex aggressive-indent modus-themes elfeed-org srefactor org-static-blog org-bullets lua-mode adaptive-wrap deft org-msg flyspell-popup helm-bibtex wc-mode mu4e-alert helm-descbinds palimpsest xclip olivetti org-roam-ui org-roam engine-mode synosaurus centered-cursor-mode org-wc writegood-mode org-contrib org-journal org-pomodoro notmuch)))
 
