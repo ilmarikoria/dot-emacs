@@ -3,21 +3,23 @@
 ;-----------------------------------------------------------------------;
 (require 'package)
 (add-to-list 'package-archives
- 	     '("melpa" . "https://melpa.org/packages/") t)
+  	     '("melpa" . "https://melpa.org/packages/") t)
 (package-initialize)
 
 ;-----------------------------------------------------------------------;
 ; GENERAL SETTINGS                                                      ;
 ;-----------------------------------------------------------------------;
 ;; -- emacs misc settings
-(setq initial-buffer-choice "~/org/org-roam/todo/todo.org"
+(setq initial-buffer-choice "~/my-files/org/org-roam/todo/todo.org"
       inhibit-startup-screen t
       system-time-locale "C"
       tramp-verbose 1
       auth-sources '("~/.authinfo.gpg" "~/.authinfo" "~/.netrc")
       ring-bell-function 'ignore
       server-client-instructions nil
-      native-comp-async-report-warnings-errors nil)
+      native-comp-async-report-warnings-errors nil
+      scroll-conservatively 101
+      scroll-margin 20)
 
 ;; -- deleting stuff
 (setq undo-limit 800000
@@ -28,16 +30,16 @@
 
 ;; -- writing general
 (setq synosaurus-choose-method 'popup
-      wc-modeline-format "WC[%W%w/%tw%gw]"
-      ispell-dictionary "en_US"
-      abbrev-file-name "~/org/abbrev_defs/abbrev_defs"
-      next-line-add-newlines t
-      save-abbrevs 'silently
-      word-wrap-by-category t
-      electric-pair-preserve-balance nil
-      synosaurus-backend 'synosaurus-backend-wordnet
-      ispell-personal-dictionary "~/emacs/ispell-personal-dictionary"
-      ispell-silently-savep t)
+       wc-modeline-format "WC[%W%w/%tw%gw]"
+       ispell-dictionary "en_US"
+       abbrev-file-name "~/my-files/org/abbrev_defs/abbrev_defs"
+       next-line-add-newlines t
+       save-abbrevs 'silently
+       word-wrap-by-category t
+       electric-pair-preserve-balance nil
+       synosaurus-backend 'synosaurus-backend-wordnet
+       ispell-personal-dictionary "~/my-files/emacs/ispell-personal-dictionary"
+       ispell-silently-savep t)
 
 ;; -- writegood-mode
 (setq writegood-weasel-words
@@ -58,7 +60,7 @@
 
 ;; -- auto capitalization
 ;; -- fix for org mode "https://emacs.stackexchange.com/questions/3949/fixing-auto-capitalize-to-work-with-org-mode-headings-and-lists"
-(add-to-list 'load-path "~/.emacs.d/my-packages/auto-capitalize-el/")
+(add-to-list 'load-path "~/my-files/emacs/.emacs.d/my-packages/auto-capitalize-el/")
 (require 'auto-capitalize)
 (setq auto-capitalize-words `("I" "English" "Chinese" "China" "Taiwan"))
 
@@ -70,7 +72,6 @@
 (xclip-mode 1)
 (tool-bar-mode -1)
 (set-default 'truncate-lines t)
-(global-centered-cursor-mode +1)
 (global-auto-revert-mode)
 (scroll-bar-mode -1)
 (wrap-region-mode t)
@@ -108,24 +109,19 @@
 
 ;; -- dired 
 (put 'dired-find-alternate-file 'disabled nil)
-(add-hook 'dired-mode-hook 'dired-hide-details-mode)
+;; (add-hook 'dired-mode-hook 'dired-hide-details-mode)
 
 ;; -- no popup for async shell command
 (add-to-list 'display-buffer-alist
 	     (cons "\\*Async Shell Command\\*.*" (cons #'display-buffer-no-window nil)))
 
-;; -- line wrapping rules, requires emacs 28 ("https://emacs.stackexchange.com/questions/19027/how-to-wrap-line-at-some-characters-other-than-space/19029#19029")
+;; -- line wrapping rules
 ;; -- M-x describe-categories
 (modify-category-entry ?- ?|)
 ;; -- TODO check if these are needed
 (modify-category-entry ?\) ?|)
 (modify-category-entry ?_ ?|)
 (modify-category-entry ?/ ?|)
-
-;; -- mediawiki
-(setq mediawiki-site-alist '(("Debian" "https://wiki.debian.org/WikiHomePage/" "" "" "Main Page")))
-(setq mediawiki-mode-hook (lambda ()
-                            (visual-line-mode 1)))
 
 ;-----------------------------------------------------------------------;
 ; GLOBAL KEYBINDINGS                                                    ;
@@ -143,9 +139,9 @@
 (global-set-key (kbd "C-c 1") 'elfeed)
 (global-set-key (kbd "C-c l") #'flyspell-popup-correct)
 (global-set-key (kbd "C-c z") 'olivetti-mode)
-(global-set-key (kbd "C-c i") 'hl-line-mode)
 (global-set-key (kbd "C-c t") 'dired-toggle-read-only)
 (global-set-key (kbd "C-c r") 'ispell-word)
+(global-set-key (kbd "C-c i") 'org-store-link)
 
 ;; -- multiple cursors (based on "https://www.youtube.com/watch?v=mDDeSKRc3Zo")
 ;; -- if issue with org-mode delete "~/.emacs.d/.mc-lists.el" and follow prompt
@@ -198,7 +194,7 @@
   :keybinding "t")
 
 ;; -- zoom
-(add-to-list 'load-path "~/.emacs.d/my-packages/zoom-frm/")
+(add-to-list 'load-path "~/my-files/emacs/.emacs.d/my-packages/zoom-frm/")
 (require 'zoom-frm)
 (define-key ctl-x-map [(control ?+)] 'zoom-in/out)
 (define-key ctl-x-map [(control ?-)] 'zoom-in/out)
@@ -211,12 +207,7 @@
 ;; Get rid of `mouse-set-font' or `mouse-appearance-menu':
 (global-set-key [S-down-mouse-1] nil)
 
-;; -- my macros
-(fset 'make-cloze
-   (kmacro-lambda-form [?\C-  ?\M-f ?\{ ?\C-  ?\M-f ?\{ ?c ?1 ?: ?:] 0 "%d"))
-(global-set-key (kbd "C-c 2") 'make-cloze)
-
-;-----------------------------------------------------------------------;
+a;-----------------------------------------------------------------------;
 ; ORG MODE                                                              ;
 ;-----------------------------------------------------------------------;
 ;; -- ox extras
@@ -229,11 +220,11 @@
  '(ignore-headlines))
 
 ;; -- org general
-(setq org-directory "~/org"
+(setq org-directory "~/my-files/org"
       org-file-apps '((auto-mode . emacs)
 		      ("\\.x?html?\\'" . "firefox %s")
-		      ("\\.pdf\\'" . "atril \"%s\"")
-		      ("\\.pdf::\\([0-9]+\\)\\'" . "atril \"%s\" -p %1"))
+		      ("\\.pdf\\'" . "evince \"%s\"")
+		      ("\\.pdf::\\([0-9]+\\)\\'" . "evince \"%s\" -p %1"))
       org-startup-folded t
       org-startup-indented t
       org-indent-mode t
@@ -248,8 +239,8 @@
 
 ;; -- org-ref
 (require 'org-ref)
-(setq org-ref-bibliography-notes "~/bibliography/bibliography-notes.org"
-      org-ref-default-bibliography '("~/bibliography/bibliography.bib"))
+(setq org-ref-bibliography-notes "~/my-files/bibliography/bibliography-notes.org"
+      org-ref-default-bibliography '("~/my-files/bibliography/bibliography.bib"))
 
 ;; -- org-pomodoro
 (setq org-pomodoro-audio-player "/usr/bin/mpv"
@@ -290,16 +281,17 @@
 (setq org-agenda-start-on-weekday nil
       org-agenda-window-setup 'only-window)
 
-;; -- org source blocks
+a;; -- org source blocks
 (setq org-src-tab-acts-natively t
       org-confirm-babel-evaluate nil)
 
 ;; -- org capture
 (setq org-capture-templates '(("n" "note-at-point" plain (file "") " - (%^{location}) Here it says that %^{Here it says that...}.")
-                             ("w" "weekly-review-at-point" plain (file "~/org/notes.org") (file "~/org/org-templates/weekly-review.txt"))
-            		     ("d" "diary-at-point" plain (file "~/org/notes.org") (file "~/org/org-templates/daily-diary.txt"))
-                             ("t" "scheduled-todo" entry (file+headline "~/org/org-todo/todo.org" "TASK-INDEX") (file "~/org/org-templates/scheduled-todo.txt"))
-           		     ("r" "rss todo" entry (file+olp "~/org/org-todo/todo.org" "TASK-INDEX") "* TODO %^{Description} %^g:RSS:\nSCHEDULED: %^t\n\n %a\n\n %i")))
+                             ("w" "weekly-review-at-point" plain (file "~/my-files/org/notes.org") (file "~/my-files/org/org-templates/weekly-review.txt"))
+            		     ("d" "diary-at-point" plain (file "~/my-files/org/notes.org") (file "~/my-files/org/org-templates/daily-diary.txt"))
+			     ("b" "beamer-at-point" plain (file "") (file "~/my-files/org/org-templates/beamer"))
+                             ("t" "scheduled-todo" entry (file+headline "~/my-files/org/org-todo/todo.org" "TASK-INDEX") (file "~/my-files/org/org-templates/scheduled-todo.txt"))
+           		     ("r" "rss todo" entry (file+olp "~/my-files/org/org-todo/todo.org" "TASK-INDEX") "* TODO %^{Description} %^g:RSS:\nSCHEDULED: %^t\n\n %a\n\n %i")))
 
 ;; -- capture at point, for notes and stuff
 (defun org-capture-at-point () (interactive)
@@ -309,6 +301,7 @@
 (org-babel-do-load-languages
  'org-babel-load-languages '((emacs-lisp . t)
 			     (python . t)
+     			     (shell . t)
 			     (lua . t)))
 
 ;; -- org bullets
@@ -323,7 +316,7 @@
 	    (add-hook 'after-save-hook 'my-org-align-tags nil 'make-it-local)))
 
 ;; -- org to xml export
-(add-to-list 'load-path "~/.emacs.d/my-packages/org-to-xml")
+(add-to-list 'load-path "~/my-files/emacs/.emacs.d/my-packages/org-to-xml")
 (require 'om-to-xml) ;; requires "org-ml" (from melpa)
 
 ;; -- org github toc
@@ -347,7 +340,7 @@
 
 (add-hook 'after-save-hook #'(lambda ()
 			      (if (string= (buffer-file-name)
-					   (concat (getenv "HOME") "/org/org-todo/todo.org"))
+					   (concat (getenv "HOME") "/my-files/org/org-todo/todo.org"))
 				  (my-org-agenda-to-appt))))
 
 (setq appt-disp-window-function 'my-appt-display
@@ -365,9 +358,9 @@
 ;-----------------------------------------------------------------------;
 (setq org-static-blog-publish-title "Ilmari Koria"
       org-static-blog-publish-url "https://ilmarikoria.com"
-      org-static-blog-publish-directory "~/org/org-blog/html"
-      org-static-blog-posts-directory "~/org/org-roam/blog"
-      org-static-blog-drafts-directory "~/org/org-blog/blog-drafts"
+      org-static-blog-publish-directory "~/my-files/org/org-blog/html"
+      org-static-blog-posts-directory "~/my-files/org/org-roam/blog"
+      org-static-blog-drafts-directory "~/my-files/org/org-blog/blog-drafts"
       org-static-blog-enable-tags nil
       org-static-blog-preview-ellipsis ""
       org-static-blog-use-preview t
@@ -408,7 +401,7 @@
 (setq helm-truncate-lines t)
 
 ;; -- roam basic
-(setq org-roam-directory (file-truename "~/org/org-roam")
+(setq org-roam-directory (file-truename "~/my-files/org/org-roam")
       org-roam-v2-ack t
       org-roam-completion-everywhere t)
 
@@ -428,10 +421,12 @@
         ("m" "misc" plain "%?" :target (file+head "misc/%<%Y-%m-%d>-misc-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t) ;; everything else
         ("w" "wiki" plain "%?" :target (file+head "wiki/%<%Y-%m-%d>-wiki-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t)
         ("l" "application" plain "%?" :target (file+head "application-notes/%<%Y-%m-%d>-application-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t)
+        ("t" "tech-note" plain "%?" :target (file+head "tech-notes/%<%Y-%m-%d>-tech-note-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t)
+        ("e" "presentation" plain "%?" :target (file+head "presentation/%<%Y-%m-%d>-presentation-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}\n#+setupfile: ~/my-files/org/org-setup/beamer") :unnarrowed t)
         ("a" "academic-note" plain "%?" :target (file+head "academic-notes/%<%Y-%m-%d>-academic-note-${slug}.org" "#+title: ${title}\n#+filetags: %^{TAGS}") :unnarrowed t))) ;; my general note category for academic studies and professional stuff, use tags to specifiy
 
 ;; -- dailies
-(setq org-roam-dailies-directory "~/org/org-roam/fleeting-notes"
+(setq org-roam-dailies-directory "~/my-files/org/org-roam/fleeting-notes"
       org-roam-dailies-capture-templates '(("f" "fleeting-notes" entry "\n* %<%Y-%m-%d %H:%M> - %?" :target (file "fleeting-notes.org"))))
 
 ;; -- deft
@@ -442,7 +437,7 @@
 
 ;; -- journal
 (require 'org-journal)
-(setq org-journal-dir "~/org/org-roam/org-journal"
+(setq org-journal-dir "~/my-files/org/org-roam/org-journal"
       org-journal-date-format "%Y-%m-%d"
       org-journal-file-format "%Y-%m-journal.org"
       org-journal-enable-agenda-integration t
@@ -470,11 +465,11 @@
         (not (member "ATTACH" (org-get-tags)))))
 
 ;; -- org roam buffer settings
-(setq org-roam-mode-sections
-      (list #'org-roam-backlinks-section
-            #'org-roam-reflinks-section
-            ;; #'org-roam-unlinked-references-section
-            ))
+;; (setq org-roam-mode-sections
+;;       (list #'org-roam-backlinks-section
+;;             #'org-roam-reflinks-section
+;;             ;; #'org-roam-unlinked-references-section
+;;             ))
 
 (add-to-list 'display-buffer-alist
              '("\\*org-roam\\*"
@@ -505,7 +500,7 @@
 ;; -- elfeed-org
 (require 'elfeed-org)
 (elfeed-org)
-(setq rmh-elfeed-org-files (list "~/org/org-roam/misc/2022-07-10-misc-rss-feed.org"))
+(setq rmh-elfeed-org-files (list "~/my-files/org/org-roam/misc/2022-07-10-misc-rss-feed.org"))
 
 ;; -- fix for use with olivetti
 (defun elfeed-olivetti (buff)
@@ -533,11 +528,11 @@
 
 (latex-preview-pane-enable)
 
-;-----------------------------------------------------------------------;
-; STYLING/THEMES                                                        ; 
-;-----------------------------------------------------------------------;
-;; -- org styling
-(set-face-underline 'org-ellipsis nil)
+;; ;-----------------------------------------------------------------------;
+;; ; STYLING/THEMES                                                        ; 
+;; ;-----------------------------------------------------------------------;
+;; ;; -- org styling
+;(set-face-underline 'org-ellipsis nil)
 
 ;----------------------------------------------------------------------;
 ; ADDED BY EMACS                                                       ; 
@@ -547,20 +542,23 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes '(modus-vivendi))
+ '(custom-enabled-themes '(modus-operandi))
  '(custom-safe-themes
    '("5a611788d47c1deec31494eb2bb864fde402b32b139fe461312589a9f28835db" "4a288765be220b99defaaeb4c915ed783a9916e3e08f33278bf5ff56e49cbc73" default))
  '(org-agenda-files
-   '("/home/ilmari/org/org-roam/todo/todo.org" "/home/ilmari/org/org-roam/academic-notes/2022-06-06-academic-note-nccu_mandarin_notes.org" "/home/ilmari/org/org-roam/org-journal/2022-07-journal.org"))
+   '("/home/ilmari/my-files/org/org-roam/todo/todo.org" "/home/ilmari/my-files/org/org-roam/academic-notes/2022-06-06-academic-note-nccu_mandarin_notes.org" "/home/ilmari/my-files/org/org-roam/org-journal/2022-07-journal.org"))
+ '(org-ellipsis " ⤾")
+ '(org-hide-leading-stars t)
  '(package-selected-packages
-   '(org-ml wrap-region org-make-toc expand-region multiple-cursors latex-preview-pane auctex gnu-elpa-keyring-update magit bongo org-roam-bibtex aggressive-indent modus-themes elfeed-org srefactor org-static-blog org-bullets lua-mode adaptive-wrap deft org-msg flyspell-popup helm-bibtex wc-mode mu4e-alert helm-descbinds palimpsest xclip olivetti org-roam-ui org-roam engine-mode synosaurus centered-cursor-mode org-wc writegood-mode org-contrib org-journal org-pomodoro notmuch)))
+   '(zoutline xclip writegood-mode wrap-region wc-mode synosaurus swiper srefactor pkg-info palimpsest org-wc org-static-blog org-roam-ui org-roam-bibtex org-ref org-pomodoro org-msg org-ml org-make-toc org-journal org-contrib org-bullets olivetti multiple-cursors mu4e-alert modus-themes magit lua-mode lsp-mode latex-preview-pane iedit helm-descbinds grammarly gnu-elpa-keyring-update flyspell-popup expand-region engine-mode elfeed-org deft citeproc bongo auctex aggressive-indent adaptive-wrap ace-window))
+ '(tool-bar-mode nil))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Noto Sans Mono" :foundry "GOOG" :slant normal :weight normal :height 108 :width normal))))
+ '(default ((t (:family "Noto Sans Mono" :foundry "GOOG" :slant normal :weight normal :height 120 :width normal))))
  '(flyspell-duplicate ((t nil)))
  '(flyspell-incorrect ((t (:inherit modus-themes-lang-error))))
  '(minibuffer-prompt ((t (:inherit modus-themes-prompt))))
