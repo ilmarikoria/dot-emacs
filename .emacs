@@ -123,6 +123,12 @@
 (modify-category-entry ?_ ?|)
 (modify-category-entry ?/ ?|)
 
+;; -- backups
+(setq auto-save-interval 20
+      backup-each-save-mirror-location "~/.emacs-backup/"
+      backup-each-save-remote-files t)
+(add-hook 'after-save-hook 'backup-each-save)
+
 ;-----------------------------------------------------------------------;
 ; GLOBAL KEYBINDINGS                                                    ;
 ;-----------------------------------------------------------------------;
@@ -207,7 +213,7 @@
 ;; Get rid of `mouse-set-font' or `mouse-appearance-menu':
 (global-set-key [S-down-mouse-1] nil)
 
-a;-----------------------------------------------------------------------;
+;-----------------------------------------------------------------------;
 ; ORG MODE                                                              ;
 ;-----------------------------------------------------------------------;
 ;; -- ox extras
@@ -281,7 +287,7 @@ a;-----------------------------------------------------------------------;
 (setq org-agenda-start-on-weekday nil
       org-agenda-window-setup 'only-window)
 
-a;; -- org source blocks
+;; -- org source blocks
 (setq org-src-tab-acts-natively t
       org-confirm-babel-evaluate nil)
 
@@ -290,8 +296,8 @@ a;; -- org source blocks
                              ("w" "weekly-review-at-point" plain (file "~/my-files/org/notes.org") (file "~/my-files/org/org-templates/weekly-review.txt"))
             		     ("d" "diary-at-point" plain (file "~/my-files/org/notes.org") (file "~/my-files/org/org-templates/daily-diary.txt"))
 			     ("b" "beamer-at-point" plain (file "") (file "~/my-files/org/org-templates/beamer"))
-                             ("t" "scheduled-todo" entry (file+headline "~/my-files/org/org-todo/todo.org" "TASK-INDEX") (file "~/my-files/org/org-templates/scheduled-todo.txt"))
-           		     ("r" "rss todo" entry (file+olp "~/my-files/org/org-todo/todo.org" "TASK-INDEX") "* TODO %^{Description} %^g:RSS:\nSCHEDULED: %^t\n\n %a\n\n %i")))
+                             ("t" "scheduled-todo" entry (file+headline "~/my-files/org/org-roam/todo/todo.org" "TASK-INDEX") (file "~/my-files/org/org-templates/scheduled-todo.txt"))
+           		     ("r" "rss todo" entry (file+olp "~/my-files/org/org-roam/todo/todo.org" "TASK-INDEX") "* TODO %^{Description} %^g:RSS:\nSCHEDULED: %^t\n\n %a\n\n %i")))
 
 ;; -- capture at point, for notes and stuff
 (defun org-capture-at-point () (interactive)
@@ -542,7 +548,7 @@ a;; -- org source blocks
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes '(modus-operandi))
+ '(custom-enabled-themes '(modus-vivendi))
  '(custom-safe-themes
    '("5a611788d47c1deec31494eb2bb864fde402b32b139fe461312589a9f28835db" "4a288765be220b99defaaeb4c915ed783a9916e3e08f33278bf5ff56e49cbc73" default))
  '(org-agenda-files
@@ -550,7 +556,7 @@ a;; -- org source blocks
  '(org-ellipsis " ⤾")
  '(org-hide-leading-stars t)
  '(package-selected-packages
-   '(zoutline xclip writegood-mode wrap-region wc-mode synosaurus swiper srefactor pkg-info palimpsest org-wc org-static-blog org-roam-ui org-roam-bibtex org-ref org-pomodoro org-msg org-ml org-make-toc org-journal org-contrib org-bullets olivetti multiple-cursors mu4e-alert modus-themes magit lua-mode lsp-mode latex-preview-pane iedit helm-descbinds grammarly gnu-elpa-keyring-update flyspell-popup expand-region engine-mode elfeed-org deft citeproc bongo auctex aggressive-indent adaptive-wrap ace-window))
+   '(backup-each-save zoutline xclip writegood-mode wrap-region wc-mode synosaurus swiper srefactor pkg-info palimpsest org-wc org-static-blog org-roam-ui org-roam-bibtex org-ref org-pomodoro org-msg org-ml org-make-toc org-journal org-contrib org-bullets olivetti multiple-cursors mu4e-alert modus-themes magit lua-mode lsp-mode latex-preview-pane iedit helm-descbinds grammarly gnu-elpa-keyring-update flyspell-popup expand-region engine-mode elfeed-org deft citeproc bongo auctex aggressive-indent adaptive-wrap ace-window))
  '(tool-bar-mode nil))
 
 (custom-set-faces
