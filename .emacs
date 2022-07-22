@@ -285,7 +285,12 @@
 
 ;; -- org agenda
 (setq org-agenda-start-on-weekday nil
-      org-agenda-window-setup 'only-window)
+      org-agenda-window-setup 'only-window
+      org-agenda-custom-commands
+	    '(("T" "TODAY'S TASKS" agenda ""
+        	((org-agenda-overriding-header "Today's agenda")
+         	(org-agenda-span 'day)
+	        ))))
 
 ;; -- org source blocks
 (setq org-src-tab-acts-natively t
