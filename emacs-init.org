@@ -189,11 +189,11 @@
 (setq synosaurus-choose-method 'popup
       synosaurus-backend 'synosaurus-backend-wordnet
 
-      ispell-personal-dictionary "~/my-files/emacs/ispell-personal-dictionary"
+      ispell-personal-dictionary "~/my-files/org/org-roam/emacs/ispell-personal-dictionary"
       ispell-silently-savep doesn't
       ispell-dictionary "en_US"
 
-      abbrev-file-name "~/my-files/org/abbrev_defs/abbrev_defs"
+      abbrev-file-name "~/my-files/org/org-roam/emacs/abbrev_defs/abbrev_defs"
       save-abbrevs 'silently)
       
 #+end_example
@@ -228,7 +228,7 @@
   - "https://emacs.stackexchange.com/questions/3949/fixing-auto-capitalize-to-work-with-org-mode-headings-and-lists"
 
 #+begin_src elisp
-  (add-to-list 'load-path "~/my-files/emacs/.emacs.d/my-packages/auto-capitalize-el/")
+  (add-to-list 'load-path "~/my-files/org/org-roam/emacs/.emacs.d/my-packages/auto-capitalize-el/")
   (require 'auto-capitalize)
   (setq auto-capitalize-words `("I" "English" "Chinese" "China" "Taiwan"))
 #+end_src
@@ -333,7 +333,7 @@
 
 ** Zoom
 #+begin_src elisp
-  (add-to-list 'load-path "~/my-files/emacs/.emacs.d/my-packages/zoom-frm/")
+  (add-to-list 'load-path "~/my-files/org/org-roam/emacs/.emacs.d/my-packages/zoom-frm/")
   (require 'zoom-frm)
 #+end_src
 
@@ -496,7 +496,7 @@
 ** XML export
 - Requires =org-ml=
 #+begin_src elisp
-  (add-to-list 'load-path "~/my-files/emacs/.emacs.d/my-packages/org-to-xml")
+  (add-to-list 'load-path "~/my-files/org/org-roam/emacs/.emacs.d/my-packages/org-to-xml")
   (require 'om-to-xml)
 #+end_src
 
@@ -518,7 +518,7 @@
 
   (add-hook 'after-save-hook #'(lambda ()
                                  (if (string= (buffer-file-name)
-                                              (concat (getenv "HOME") "/my-files/org/org-todo/todo.org"))
+                                              (concat (getenv "HOME") "/my-files/org/org-roam/todo/todo.org"))
                                      (my-org-agenda-to-appt))))
 
   (setq appt-disp-window-function 'my-appt-display
