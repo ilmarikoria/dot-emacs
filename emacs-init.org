@@ -185,18 +185,17 @@
 
 * WRITING
 ** Spelling
-#+begin_example elisp
+#+begin_src elisp
 (setq synosaurus-choose-method 'popup
       synosaurus-backend 'synosaurus-backend-wordnet
 
       ispell-personal-dictionary "~/my-files/org/org-roam/emacs/ispell-personal-dictionary"
-      ispell-silently-savep doesn't
+      ispell-silently-savep t
       ispell-dictionary "en_US"
 
       abbrev-file-name "~/my-files/org/org-roam/emacs/abbrev_defs/abbrev_defs"
       save-abbrevs 'silently)
-      
-#+end_example
+#+end_src
 ** Word count
 #+begin_src elisp
   (setq wc-modeline-format "WC[%W%w/%tw%gw]")
