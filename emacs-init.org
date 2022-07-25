@@ -17,7 +17,7 @@
 :CONTENTS:
 - [[#babel-readme][BABEL README]]
 - [[#packages][PACKAGES]]
-- [[#general-settings][GENERAL SETTINGS]]
+- [[#emacs-settings][EMACS SETTINGS]]
   - [[#basic-settings][Basic settings]]
   - [[#scrolling][Scrolling]]
   - [[#deleting-stuff][Deleting stuff]]
@@ -78,7 +78,7 @@
   (package-initialize)
 #+end_src
 
-* GENERAL SETTINGS
+* EMACS SETTINGS
 ** Basic settings
 - TODO Split this up.
 #+begin_src elisp
