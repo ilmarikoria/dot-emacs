@@ -82,15 +82,16 @@
 ** Basic settings
 - TODO Split this up.
 #+begin_src elisp
-    (setq initial-buffer-choice "~/my-files/org/org-roam/todo/todo.org"
-          inhibit-startup-screen t
-          system-time-locale "C"
-          tramp-verbose 1
-          auth-sources '("~/.authinfo.gpg" "~/.authinfo" "~/.netrc")
-          ring-bell-function 'ignore
-          server-client-instructions nil  
-          user-full-name "Ilmari Koria"
-          user-mail-address "ilmarikoria@posteo.net")
+  (setq initial-buffer-choice "~/my-files/org/org-roam/todo/todo.org"
+        inhibit-startup-screen t
+        system-time-locale "C"
+        tramp-verbose 1
+        auth-sources '("~/.authinfo.gpg" "~/.authinfo" "~/.netrc")
+        ring-bell-function 'ignore
+        server-client-instructions nil  
+        user-full-name "Ilmari Koria"
+        user-mail-address "ilmarikoria@posteo.net"
+        line-spacing 0.3)
 #+end_src
 
 ** Scrolling
@@ -265,7 +266,7 @@
   (global-set-key (kbd "C-c 1") 'elfeed)
   (global-set-key (kbd "C-c l") #'flyspell-popup-correct)
   (global-set-key (kbd "C-c z") 'olivetti-mode)
-  (global-set-key (kbd "C-c t") 'dired-toggle-read-only)
+;  (global-set-key (kbd "C-c t") 'dired-toggle-read-only)
   (global-set-key (kbd "C-c r") 'ispell-word)
   (global-set-key (kbd "C-c i") 'org-store-link)
 #+end_src
@@ -365,19 +366,23 @@
 
 ** General settings
 #+begin_src elisp
-  (setq org-directory "~/my-files/org"
-        org-file-apps '((auto-mode . emacs)
-                        ("\\.x?html?\\'" . "firefox %s")
-                        ("\\.pdf\\'" . "evince \"%s\"")
-                        ("\\.pdf::\\([0-9]+\\)\\'" . "evince \"%s\" -p %1"))
-        org-startup-folded t
-        org-startup-indented t
-        org-indent-mode t
-        org-log-into-drawer t
-        org-hide-emphasis-markers nil
-        org-startup-truncated t
-        org-tags-column 0
-        org-ellipsis " ⤾")
+      (setq org-directory "~/my-files/org"
+            org-file-apps '((auto-mode . emacs)
+                            ("\\.x?html?\\'" . "firefox %s")
+                            ("\\.pdf\\'" . "evince \"%s\"")
+                            ("\\.pdf::\\([0-9]+\\)\\'" . "evince \"%s\" -p %1"))
+            org-startup-folded t
+            org-startup-indented t
+            org-indent-mode t
+            org-log-into-drawer t
+            org-hide-emphasis-markers nil
+            org-startup-truncated t
+            org-tags-column 0
+            org-ellipsis " ⤾"
+            org-archive-location "~/my-files/org/org-archive/org-archive-global.org::* From %s"
+            org-archive-mark-done t
+            org-log-done 'note
+            org-archive-subtree-save-file-p t)
 #+end_src
 
 ** Word count 
@@ -467,7 +472,8 @@
                                 ("w" "weekly-review-at-point" plain (file "~/my-files/org/notes.org") (file "~/my-files/org/org-templates/weekly-review.txt"))
                                 ("d" "diary-at-point" plain (file "~/my-files/org/notes.org") (file "~/my-files/org/org-templates/daily-diary.txt"))
                                 ("b" "beamer-at-point" plain (file "") (file "~/my-files/org/org-templates/beamer"))
-                                ("t" "scheduled-todo" entry (file+headline "~/my-files/org/org-roam/todo/todo.org" "TASK-INDEX") (file "~/my-files/org/org-templates/scheduled-todo.txt"))
+                                ("t" "scheduled-todo" entry (file+headline "~/my-files/org/org-roam/todo/todo.org" "TASK-INDEX") (file "~/my-files/org/org-templates/scheduled-todo-basic"))
+                                ("T" "scheduled-todo-full" entry (file+headline "~/my-files/org/org-roam/todo/todo.org" "TASK-INDEX") (file "~/my-files/org/org-templates/scheduled-todo-with-deadline"))
                                 ("r" "rss todo" entry (file+olp "~/my-files/org/org-roam/todo/todo.org" "TASK-INDEX") "* TODO %^{Description} %^g:RSS:\nSCHEDULED: %^t\n\n %a\n\n %i")))
 #+end_src
 
@@ -684,7 +690,7 @@
 * ELFEED RSS
 ** Basic
 #+begin_src elisp
-  (setq elfeed-search-filter "@3-days-ago +unread"
+  (setq elfeed-search-filter "@1-days-ago +unread"
         elfeed-search-title-max-width 100
         elfeed-search-title-min-width 100
         url-queue-timeout 120
