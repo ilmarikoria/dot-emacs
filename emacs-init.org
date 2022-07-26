@@ -90,8 +90,7 @@
         ring-bell-function 'ignore
         server-client-instructions nil  
         user-full-name "Ilmari Koria"
-        user-mail-address "ilmarikoria@posteo.net"
-        line-spacing 0.3)
+        user-mail-address "ilmarikoria@posteo.net")
 #+end_src
 
 ** Scrolling
@@ -253,6 +252,7 @@
 #+end_src
 * KEYBINDINGS
 ** General
+- =free-keys= to find unused bindings
 #+begin_src elisp
   (global-set-key (kbd "C-c s") #'flyspell-buffer)
   (global-set-key (kbd "C-c w") 'count-words-region)
@@ -266,11 +266,14 @@
   (global-set-key (kbd "C-c 1") 'elfeed)
   (global-set-key (kbd "C-c l") #'flyspell-popup-correct)
   (global-set-key (kbd "C-c z") 'olivetti-mode)
-;  (global-set-key (kbd "C-c t") 'dired-toggle-read-only)
   (global-set-key (kbd "C-c r") 'ispell-word)
   (global-set-key (kbd "C-c i") 'org-store-link)
 #+end_src
-
+** Dangerous bindings
+#+begin_src elisp
+  (global-set-key (kbd "C-! C-t") 'dired-toggle-read-only)
+  (global-set-key (kbd "C-! C-k") 'save-buffers-kill-emacs)
+#+end_src
 ** Multiple cursors
 - Based on "https://www.youtube.com/watch?v=mDDeSKRc3Zo"
 - If issue with org-mode, delete ".mc-lists.el" and follow prompt
@@ -366,23 +369,24 @@
 
 ** General settings
 #+begin_src elisp
-      (setq org-directory "~/my-files/org"
-            org-file-apps '((auto-mode . emacs)
-                            ("\\.x?html?\\'" . "firefox %s")
-                            ("\\.pdf\\'" . "evince \"%s\"")
-                            ("\\.pdf::\\([0-9]+\\)\\'" . "evince \"%s\" -p %1"))
-            org-startup-folded t
-            org-startup-indented t
-            org-indent-mode t
-            org-log-into-drawer t
-            org-hide-emphasis-markers nil
-            org-startup-truncated t
-            org-tags-column 0
-            org-ellipsis " ⤾"
-            org-archive-location "~/my-files/org/org-archive/org-archive-global.org::* From %s"
-            org-archive-mark-done t
-            org-log-done 'note
-            org-archive-subtree-save-file-p t)
+  (setq org-directory "~/my-files/org"
+        org-file-apps '((auto-mode . emacs)
+                        ("\\.x?html?\\'" . "firefox %s")
+                        ("\\.pdf\\'" . "evince \"%s\"")
+                        ("\\.pdf::\\([0-9]+\\)\\'" . "evince \"%s\" -p %1"))
+        org-startup-folded t
+        org-startup-indented t
+        org-indent-mode t
+        org-log-into-drawer t
+        org-clock-into-drawer "CLOCK"
+        org-hide-emphasis-markers nil
+        org-startup-truncated t
+        org-tags-column 0
+        org-ellipsis " ⤾"
+        org-archive-location "~/my-files/org/org-archive/org-archive-global.org::* From %s"
+        org-archive-mark-done t
+        org-log-done 'note
+        org-archive-subtree-save-file-p t)
 #+end_src
 
 ** Word count 
@@ -746,6 +750,7 @@
    ;; Your init file should contain only one such instance.
    ;; If there is more than one, they won't work right.
    '(custom-enabled-themes '(modus-vivendi))
+   '(line-spacing 0.3)
    '(custom-safe-themes
      '("5a611788d47c1deec31494eb2bb864fde402b32b139fe461312589a9f28835db" "4a288765be220b99defaaeb4c915ed783a9916e3e08f33278bf5ff56e49cbc73" default))
    '(org-agenda-files
